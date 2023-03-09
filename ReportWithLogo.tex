@@ -1,0 +1,193 @@
+\documentclass[a4paper,12pt]{ctexart}
+\usepackage{graphicx} %插入图片的宏包
+\usepackage{float} %设置图片浮动位置的宏包
+\usepackage{subfigure} %插入多图时用子图显示的宏包
+\usepackage{fancyhdr} %设置页眉页脚的宏包
+\usepackage[]{caption2} %设置图和表的格式的宏包
+\usepackage{multirow} %合并多行单元格的宏包
+\usepackage{longtable} %不宽但很长的表格可以用longtable宏包来进行分页显示
+\usepackage{array} %一般用于数学公式中对数组或矩阵的排版
+\usepackage{makecell}% makecell命令对表格单元格中的数据进行一些变换的控制。我们可以使用 \ 命令进行换行，也可以使用p{(宽度)}选项控制列表的宽度
+\usepackage{threeparttable} %制作三线表格
+\usepackage{booktabs}%s三线表格中的上中下直线线型设置宏包，在这个包中水平线被教程\toprule、midrule、buttomrule。
+\usepackage{enumerate} %列举宏包
+
+%页眉页脚设置
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhead[L]{}
+\fancyhead[R]{}
+\fancyhead[C]{\small{报告名称}}
+\fancyfoot[C]{\thepage}
+
+%标题序号长度设置
+\setcounter{secnumdepth}{3}
+
+%图片排版设置
+\renewcommand{\figurename}{图} %重定义编号前缀词
+\renewcommand{\captionlabeldelim}{.~} %重定义分隔符
+ %\roman是罗马数字编号，\alph是默认的字母编号，\arabic是阿拉伯数字编号，可按需替换下一行的相应位置
+\renewcommand{\thesubfigure}{(\roman{subfigure})}%此外，还可设置图编号显示格式，加括号或者不加括号
+\makeatletter \renewcommand{\@thesubfigure}{\thesubfigure \space}%子图编号与名称的间隔设置
+\renewcommand{\p@subfigure}{} \makeatother
+
+%表头文字格式的详细设置
+\renewcommand\theadset{\renewcommand\arraystretch{0.85}%
+\setlength\extrarowheight{0pt}}%行距
+\renewcommand\theadfont{\small}%字体
+\renewcommand\theadalign{rt}%行列对齐
+\renewcommand\theadgape{\Gape[0.5cm][2mm]}%上下垂直距离
+
+
+\title{
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./img/校名.png}
+  \end{figure} 
+  \huge \textbf{报告名称} \\ 
+  \large \textbf{(年级)}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{./img/校徽.png}
+  \end{figure}
+  \large 实验题目\hspace{0.7cm}\underline{\makebox[5.5cm]{实验1}} \\
+  \large 学生姓名\hspace{0.7cm}\underline{\makebox[5.5cm]{派大星}} \\
+  \large 专业班级\hspace{0.7cm}\underline{\makebox[5.5cm]{软件工程 2103}} \\
+  \large 所在学院\hspace{0.7cm}\underline{\makebox[5.5cm]{计算机科学与技术学院}} \\
+  \large 提交日期\hspace{0.7cm}\underline{\makebox[5.5cm]{2023年3月9日}} \\
+}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\newpage
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+
+\listoffigures
+\listoftables
+\newpage
+
+\pagenumbering{arabic}
+\section{大标题一}
+
+\subsection{中标题一}
+
+\subsubsection{小标题一}
+
+正文
+
+\section{大标题二}
+
+\subsection{中标题二}
+
+\subsubsection{小标题二}
+
+%单图
+\begin{figure}[H] %H为当前位置，!htb为忽略美学标准，htbp为浮动图形
+  \centering %图片居中
+  \includegraphics[width=0.7\textwidth]{./img/校徽.png} %插入图片，[]中设置图片大小，{}中是图片文件名
+  \caption{Main name 2} %最终文档中希望显示的图片标题
+  \label{Fig.main2} %用于文内引用的标签
+\end{figure}
+
+%一个板块下两个字图
+\begin{figure}[H]
+  \centering  %图片全局居中
+  \subfigure[name1]{
+    \label{Fig.sub.1}
+    \includegraphics[width=0.45\textwidth]{./img/校徽.png}}
+  \subfigure[name2]{
+    \label{Fig.sub.2}
+    \includegraphics[width=0.45\textwidth]{./img/校名.png}}
+  \caption{Main name}
+  \label{Fig.main}
+\end{figure}
+
+%图片引用
+图 \ref{Fig.main} 有两个字图，图 \ref{Fig.sub.1} 是浙工大校徽, 图 \ref{Fig.sub.2} 是浙工大校名.
+
+%两个并排的独立图片
+\begin{figure}[H]
+  \centering %图片全局居中
+  %并排几个图，就要写几个minipage
+  \begin{minipage}[b]{0.45\textwidth} %所有minipage宽度之和要小于1，否则会自动变成竖排
+    \centering %图片局部居中
+    \includegraphics[width=0.8\textwidth]{./img/校徽.png} %此时的图片宽度比例是相对于这个minipage的，不是全局
+    \caption{name 1}
+    \label{Fig.1}
+  \end{minipage}
+  \begin{minipage}[b]{0.45\textwidth} %所有minipage宽度之和要小于1，否则会自动变成竖排
+    \centering %图片局部居中
+    \includegraphics[width=0.8\textwidth]{./img/校名.png}%此时的图片宽度比例是相对于这个minipage的，不是全局
+    \caption{name 2}
+    \label{Fig.2}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[htbp] %表格的浮动环境
+  \centering\small
+  \begin{threeparttable}
+    \caption{表格样例}
+    \begin{tabular}{lccc} %表格环境,{}中是单元格对齐方式，l左对齐，c居中，r右对齐
+      \toprule %表头直线
+      \makecell[c]{双行                                                            \\ 样例}    &   单列 & \multicolumn{2}{c}{组合列} \\
+      \midrule %表中直线
+      $\ln(y/pop)$                    & \makecell[c]{双行                          \\ 样例}  &    287.25* &     566.65 \\
+      \midrule %表中直线
+      \multirow{2}{*}{$\ln(y/pop)^2$} & $-$22.85*         & $-$16.58* & $-$35.57** \\ \cline{2-4}
+                                      & $-$.29**          & $-$.31*   & $-$.37     \\
+      \midrule %表中直线
+      $Polity$                        & $-$3.20*          & $-$6.58*  & $-$6.70**  \\
+      \midrule %表中直线
+      $\ln(LandArea/pop)$             & $-$5.94           & $-$2.92*  & $-$13.02*  \\
+      \midrule %表中直线
+      Obs.                            & 36                & 41        & 38         \\
+      \midrule %表中直线
+      $R^2$                           & 0.16              & 0.68      & 0.62       \\
+      \bottomrule %表底直线
+    \end{tabular}
+    \small
+    备注: 可以在这里表格的备注
+    \begin{tablenotes}
+      \item[*] 在 5\% 水平上显着
+      \item[**] 在 10\% 水平上显着
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+\newpage
+
+% 无编号，但公式符号可以对齐的做法
+\begin{enumerate}[align=right]
+  \setlength{\leftmargin}{2em} %左边界
+  \setlength{\parsep}{0ex} %段落间距
+  \setlength{\topsep}{0ex} %列表到上下文的垂直距离
+  \setlength{\itemsep}{0ex} %条目间距
+  \setlength{\labelsep}{1em} %标号和列表项之间的距离,默认0.5em
+  \setlength{\itemindent}{0em} %标签缩进量
+  \setlength{\listparindent}{0em} %段落缩进量
+  \item [ $c_1$] 行驶（汽车）的恒定行程时间，单位：分钟/次；
+  \item [$c_2$] 乘坐捷运的常数行程时间，单位：分钟/次；
+  \item [$\tau_1$] 一个旅行者开车的单位固定成本，单位：元/(人*次)；
+  \item [$\tau_2$] 旅客单程捷运票价，单位：元/(人*次)；
+  \item [$\varsigma_1$] 交通管理者公路单位运营成本，单位：元/(人*次)；
+\end{enumerate}
+
+%无编号的一般做法
+\begin{itemize}
+  \item 春天
+  \item 夏天
+  \item 秋天
+  \item 冬天
+\end{itemize}
+
+%有编号的一般做法
+\begin{enumerate}[(1)]
+  \item 白天
+  \item 黑夜
+\end{enumerate}
+
+\end{document}
